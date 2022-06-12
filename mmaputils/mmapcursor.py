@@ -3,6 +3,10 @@ import os
 import struct
 import typing as t
 
+__all__ = (
+    "MmapCursor",
+)
+
 
 class MmapCursor:
     """
