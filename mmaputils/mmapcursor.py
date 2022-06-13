@@ -1,6 +1,7 @@
 import mmap
 import os
 import struct
+from types import TracebackType
 import typing as t
 
 __all__ = (
@@ -25,6 +26,18 @@ class MmapCursor:
         self._position = 0
         self.stack: t.List[int] = []
         self.byteorder = byteorder
+
+    def __enter__(self) -> 'MmapCursor':
+        return self
+
+    def __exit__(
+        self,
+        exc_type: t.Optional[t.Type[BaseException]],
+        exc_val: t.Optional[BaseException],
+        exc_tb: t.Optional[TracebackType]
+    ) -> bool:
+        self.close()
+        return False
 
     @property
     def struct_endian_str(self) -> str:
